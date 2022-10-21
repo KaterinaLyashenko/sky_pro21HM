@@ -91,13 +91,23 @@ class Request:
             self.__from = None
 
     def move(self):
+        t = self.__to
+        f = self.__from
         if self.__to and self.__from:
-            if eval(self.__to).add(self.__item, self.__count):
-                eval(self.__from).remove(self.__item, self.__count)
+            if t.add(self.__item, self.__count):
+                f.remove(self.__item, self.__count)
         elif self.__to:
-            eval(self.__to).add(self.__item, self.__count)
+            t.add(self.__item, self.__count)
         elif self.__from:
-            eval(self.__from).remove(self.__item, self.__count)
+            f.remove(self.__item, self.__count)
+
+        # if self.__to and self.__from:
+        #     if eval(self.__to).add(self.__item, self.__count):
+        #         eval(self.__from).remove(self.__item, self.__count)
+        # elif self.__to:
+        #     eval(self.__to).add(self.__item, self.__count)
+        # elif self.__from:
+        #     eval(self.__from).remove(self.__item, self.__count)
 
 storage_1 =Store(items={"Телефон":10, "Компютер":10, "Приставка": 10})
 storage_2 =Store(items={"Телефон":10, "Компютер":10, "Приставка": 10})
