@@ -29,20 +29,13 @@ class Store(Storage):
         self.__capacity = capacity
 
     def add(self, name, count):
-        if name in self.__items.keys():
-            if self.get_free_space() >= count:
+        if self.get_free_space() >= count:
+            if name in self.__items.keys():
                 self.__items[name] += count
                 return True
-            else:
-                print("На складе недостаточно места")
-                return False
         else:
-            if self.get_free_space() >= count:
-                self.__items[name] = count
-                return True
-            else:
-                print("На складе недостаточно места")
-                return False
+            print("На складе недостаточно места")
+            return False
 
     def remove(self, name, count):
         if self.__items[name] >= count:
