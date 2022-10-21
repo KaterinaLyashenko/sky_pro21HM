@@ -91,15 +91,21 @@ class Request:
             self.__from = None
 
     def move(self):
-        t = self.__to
-        f = self.__from
-        if self.__to and self.__from:
-            if t.add(self.__item, self.__count):
-                f.remove(self.__item, self.__count)
-        elif self.__to:
-            t.add(self.__item, self.__count)
-        elif self.__from:
-            f.remove(self.__item, self.__count)
+        dict_move = {
+            "Moving_to": self.__to,
+            "Moving_from": self.__from
+        }
+        t = dict_move.get("Moving_to")
+        f = dict_move.get("Moving_from")
+
+
+        if t and f:
+            if str(t.add(self.__item, self.__count)):
+                str(f.remove(self.__item, self.__count))
+        elif t:
+            str(t.add(self.__item, self.__count))
+        elif f:
+            str(f.remove(self.__item, self.__count))
 
         # if self.__to and self.__from:
         #     if eval(self.__to).add(self.__item, self.__count):
@@ -108,6 +114,7 @@ class Request:
         #     eval(self.__to).add(self.__item, self.__count)
         # elif self.__from:
         #     eval(self.__from).remove(self.__item, self.__count)
+
 
 storage_1 =Store(items={"Телефон":10, "Компютер":10, "Приставка": 10})
 storage_2 =Store(items={"Телефон":10, "Компютер":10, "Приставка": 10})
@@ -127,6 +134,7 @@ while True:
            req.move()
         except Exception as e:
             print(f"Произошла ошибка {e}")
+
 
 # test_text = "Забрать 3 Телефон из shop_1"
 # test_text_2 = "Доставить 1 Приставка из storage_1 в shop_1"
