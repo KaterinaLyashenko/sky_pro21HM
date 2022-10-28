@@ -65,7 +65,7 @@ class Store(Storage):
 
 class Shop(Store):
     def __int__(self, items, capacity=20):
-        super().__init__(items, capacity)
+        super().__init__(capacity)
 
     def add(self, name, count):
         if self.get_unique_items_count() >= 5:
@@ -90,22 +90,23 @@ class Request:
             self.__to = req_list[4]
             self.__from = None
 
-    def move(self):
-        dict_move = {
-            "Moving_to": self.__to,
-            "Moving_from": self.__from
+    def move(self, storages):
+        shop = Shop()
+        storage = Storage()
+
+        storages = {
+            'магазин': shop,
+            'склад': storage
         }
-        t = dict_move.get("Moving_to")
-        f = dict_move.get("Moving_from")
 
-
-        if t and f:
-            if str(t.add(self.__item, self.__count)):
-                str(f.remove(self.__item, self.__count))
-        elif t:
-            str(t.add(self.__item, self.__count))
-        elif f:
-            str(f.remove(self.__item, self.__count))
+        to = storages.get(self.__to)
+        from_som = storages.get(self.__from)
+        if to.add(self.__item, self.__count):
+                from_som.remove(self.__item, self.__count)
+        elif self.to:
+            to.add(self.__item, self.__count)
+        elif from_som:
+            from_som.remove(self.__item, self.__count)
 
         # if self.__to and self.__from:
         #     if eval(self.__to).add(self.__item, self.__count):
@@ -116,8 +117,8 @@ class Request:
         #     eval(self.__from).remove(self.__item, self.__count)
 
 
-storage_1 =Store(items={"Телефон":10, "Компютер":10, "Приставка": 10})
-storage_2 =Store(items={"Телефон":10, "Компютер":10, "Приставка": 10})
+storage_1 =Store()
+storage_2 =Store()
 shop_1 =Shop(items={"Телефон":3, "Компютер":3, "Приставка":3})
 
 while True:
